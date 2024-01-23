@@ -33,13 +33,13 @@ use rule reheader_tumor as reheader_normal with:
         temp(f"{wd}/reheadered_normal.bam")
 
 rule index_tumor:
-    input: "reheadered_tumor.bam"
+    input: f"{wd}/reheadered_tumor.bam"
     output: temp(f"{wd}/reheadered_tumor.bam.bai")
     threads: config.get("cores", 8)/2
     shell: "samtools index -@ {threads} {input}"
 
 use rule index_tumor as index_normal with:
-    input: "reheadered_normal.bam"
+    input: f"{wd}/reheadered_normal.bam"
     output: temp(f"{wd}/reheadered_normal.bam.bai")
 
 
